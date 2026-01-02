@@ -1,0 +1,4 @@
+control_number,buyer_name,style_number,pleats_name,item_type,ship_date_from_japan,ship_date_from_cebu,noumae,sample,pattern,season,item_name,item_number,specs_qty,specs_unit,youjyaku_qty,youjyaku_unit,color_detail,col_number,color,size_number,quantity
+CTRL-0010,HP,ST-1001,Sunray,Skirt,2025-10-15,2025-10-28,Yes,No,A-line,SS,Main Skirt,ITM-01,1,pc,0.3,m,Navy,1,Navy,1,120
+CTRL-0010,HP,ST-1001,Sunray,Skirt,2025-10-15,2025-10-28,Yes,No,A-line,SS,Main Skirt,ITM-01,1,pc,0.3,m,Navy,1,Navy,2,140
+CTRL-0010,ME,ST-1001,Sunray,Skirt,2025-10-15,2025-10-28,Yes,No,A-line,SS,Lining,ITM-02,1,pc,0.2,m,Navy,1,Beige,3,120
