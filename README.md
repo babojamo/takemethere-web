@@ -1,4 +1,4 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Takemethere App
 
 ## Getting Started
 
@@ -16,9 +16,14 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Learn More
+## References
 
 To learn more about Next.js, take a look at the following resources:
 
 -   [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
 -   [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+## Preview
+
+<img width="1916" height="870" alt="image" src="https://github.com/user-attachments/assets/87337714-0274-41b1-83a2-a9418db0407c" />
+
