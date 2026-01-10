@@ -9,3 +9,13 @@
 @import "./_responsive";
 @import "./_utils";
 @import "./_typography";
+
+
+.leaflet-draw {
+  z-index: 1000;
+}
+
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 1000;
+}
