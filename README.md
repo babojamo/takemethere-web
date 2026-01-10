@@ -1,4 +1,8 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Takemethere
+
+TakeMeThere App is a React-based web application that helps users plan their journeys by providing guided route options and estimated fares. By selecting an origin and a destination, users can view multiple route alternatives, recommended vehicle types for each route, and an estimated cost to help them choose the most efficient and affordable way to travel.
+
+The application focuses on clarity and usability, making route planning simple and accessible whether for daily commuting or unfamiliar destinations.
 
 ## Getting Started
 
@@ -16,9 +20,14 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Learn More
+## References
 
 To learn more about Next.js, take a look at the following resources:
 
 -   [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
 -   [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+## Preview
+
+<img width="1916" height="870" alt="image" src="https://github.com/user-attachments/assets/87337714-0274-41b1-83a2-a9418db0407c" />
+
