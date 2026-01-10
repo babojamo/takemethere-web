@@ -70,7 +70,6 @@ function DrawToolbar({
     return () => {
       map.off(L.Draw.Event.CREATED, onCreated);
 
-
       map.removeControl(drawControl);
       map.removeLayer(fg);
       featureGroupRef.current = null;
@@ -118,7 +117,7 @@ function ClickToDropPin({
 }
 
 export function RouteMapper({
-  
+
   origin,
   destination,
 
@@ -134,8 +133,6 @@ export function RouteMapper({
 
   // Holds the editable layers for Leaflet Draw
   const featureGroupRef = useRef<L.FeatureGroup | null>(null);
-  // Holds the current editable polyline layer
-  const editableLayerRef = useRef<L.Polyline | null>(null);
 
   // Load route from DB into state
   useEffect(() => {
@@ -152,11 +149,8 @@ export function RouteMapper({
     console.log(fg);
     if (!fg) return;
 
-    // Remove old editable polyline if exists
-    if (editableLayerRef.current) {
-      fg.removeLayer(editableLayerRef.current);
-      editableLayerRef.current = null;
-    }
+    // remove ALL old polylines
+    fg.clearLayers();
 
     for (let index = 0; index < routePoints.length; index++) {
       const route = routePoints[index];
@@ -169,7 +163,6 @@ export function RouteMapper({
         );
 
         fg.addLayer(polyline);
-        editableLayerRef.current = polyline;
       }
     }
   }, [routePoints]);
