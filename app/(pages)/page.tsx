@@ -10,7 +10,6 @@ import { LoadingProgress } from '../components/loading-progress/component';
 
 const RouteMapper = dynamic(() => import('@/app/components/takeme/mapper/component').then((m) => m.RouteMapper), { ssr: false });
 
-
 const HomePage = () => {
   const {
     chooseOnMap,
@@ -26,14 +25,13 @@ const HomePage = () => {
     onSearchRoute,
     searchLocation,
     setOnChooseMap,
-    setRoutes,
+    setRoutes
   } = useExplorePage();
 
   const { currentLocation } = useCurrentLocation();
 
-
   return (
-    <div style={{ height: "100vh", width: "100vw" }}>
+    <div style={{ height: '100vh', width: '100vw' }}>
       <RouteMapper
         chooseDirection={chooseOnMap}
         destination={destinationCoordinates}
@@ -51,18 +49,11 @@ const HomePage = () => {
         searchLocations={searchLocation}
       />
 
-      {
-        routeFares.length != 0 &&
-        <FloatingRouteList
-          onRouteClick={routeFare => setRoutes(routeFare.route_fare.map(r => r.route))}
-          route_fares={routeFares}
-        />
-      }
+      {routeFares.length != 0 && (
+        <FloatingRouteList onRouteClick={(routeFare) => setRoutes(routeFare.route_fare.map((r) => r.route))} route_fares={routeFares} />
+      )}
 
-      {
-        isRouteFareFetching &&
-        <LoadingProgress />
-      }
+      {isRouteFareFetching && <LoadingProgress />}
     </div>
   );
 };

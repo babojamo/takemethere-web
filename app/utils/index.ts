@@ -78,15 +78,13 @@ export function roundToDecimal(num: number, decimals: number) {
 }
 
 export const searchLocation = async (query: string) => {
-  const url =
-    "https://nominatim.openstreetmap.org/search?format=json&limit=8&q=" +
-    encodeURIComponent(query);
+  const url = 'https://nominatim.openstreetmap.org/search?format=json&limit=8&q=' + encodeURIComponent(query);
 
   const res = await fetch(url, {
     headers: {
       // Nominatim likes identifying UA; if you have a domain, set a proper one server-side.
-      "Accept": "application/json",
-    },
+      Accept: 'application/json'
+    }
   });
 
   const data = await res.json();
@@ -95,18 +93,17 @@ export const searchLocation = async (query: string) => {
     label: x.display_name,
     lat: Number(x.lat),
     lng: Number(x.lon),
-    raw: x,
+    raw: x
   }));
-}
+};
 
 export const reverseGeocode = async (lat: number, lng: number) => {
-  const url =
-    `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`;
+  const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`;
 
   const res = await fetch(url, {
     headers: {
-      "Accept": "application/json",
-    },
+      Accept: 'application/json'
+    }
   });
 
   const data = await res.json();
@@ -115,6 +112,6 @@ export const reverseGeocode = async (lat: number, lng: number) => {
     label: data.display_name,
     lat: Number(data.lat),
     lng: Number(data.lon),
-    raw: data,
+    raw: data
   };
 };

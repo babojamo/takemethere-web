@@ -1,13 +1,13 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { AutoComplete, AutoCompleteCompleteEvent } from "primereact/autocomplete";
-import { Card } from "primereact/card";
-import { Button } from "primereact/button";
+import React, { useEffect, useMemo, useState } from 'react';
+import { AutoComplete, AutoCompleteCompleteEvent } from 'primereact/autocomplete';
+import { Card } from 'primereact/card';
+import { Button } from 'primereact/button';
 
 export type LocationOption = {
-  label: string;     // display name
+  label: string; // display name
   lat: number;
   lng: number;
-  raw?: any;         // optional extra payload
+  raw?: any; // optional extra payload
 };
 
 type Props = {
@@ -31,10 +31,10 @@ export function FloatingRouteSearch({
   initialLocations,
   top = 16,
   left = 16,
-  width = 360,
+  width = 360
 }: Props) {
-  const [originQuery, setOriginQuery] = useState("");
-  const [destQuery, setDestQuery] = useState("");
+  const [originQuery, setOriginQuery] = useState('');
+  const [destQuery, setDestQuery] = useState('');
 
   const [origin, setOrigin] = useState<LocationOption | undefined>(undefined);
   const [destination, setDestination] = useState<LocationOption | undefined>(undefined);
@@ -50,21 +50,21 @@ export function FloatingRouteSearch({
       setOrigin(initialLocations.origin);
       setDestination(initialLocations.destination);
     }
-  }, [initialLocations])
+  }, [initialLocations]);
 
   const containerStyle = useMemo<React.CSSProperties>(
     () => ({
-      position: "absolute",
+      position: 'absolute',
       top,
       left,
       width,
-      zIndex: 1000, // make sure it's above the map
+      zIndex: 1000 // make sure it's above the map
     }),
     [top, left, width]
   );
 
   const completeOrigin = async (e: AutoCompleteCompleteEvent) => {
-    const q = (e.query ?? "").trim();
+    const q = (e.query ?? '').trim();
     setOriginQuery(q);
     if (!q) return setOriginSuggestions([]);
 
@@ -78,7 +78,7 @@ export function FloatingRouteSearch({
   };
 
   const completeDestination = async (e: AutoCompleteCompleteEvent) => {
-    const q = (e.query ?? "").trim();
+    const q = (e.query ?? '').trim();
     setDestQuery(q);
     if (!q) return setDestSuggestions([]);
 
@@ -98,8 +98,8 @@ export function FloatingRouteSearch({
   const clearAll = () => {
     setOrigin(undefined);
     setDestination(undefined);
-    setOriginQuery("");
-    setDestQuery("");
+    setOriginQuery('');
+    setDestQuery('');
     setOriginSuggestions([]);
     setDestSuggestions([]);
     onClear?.();
@@ -124,7 +124,7 @@ export function FloatingRouteSearch({
               placeholder="Search origin location..."
               onChange={(e) => {
                 // typing
-                if (typeof e.value === "string") setOriginQuery(e.value);
+                if (typeof e.value === 'string') setOriginQuery(e.value);
               }}
               onSelect={(e) => {
                 const selected = e.value as LocationOption;
@@ -148,7 +148,7 @@ export function FloatingRouteSearch({
               forceSelection
               placeholder="Search destination location..."
               onChange={(e) => {
-                if (typeof e.value === "string") setDestQuery(e.value);
+                if (typeof e.value === 'string') setDestQuery(e.value);
               }}
               onSelect={(e) => {
                 const selected = e.value as LocationOption;
@@ -162,14 +162,7 @@ export function FloatingRouteSearch({
           </div>
 
           <div className="flex gap-2 justify-content-end pt-1">
-            <Button
-              label="Clear"
-              icon="pi pi-times"
-              severity="secondary"
-              outlined
-              onClick={clearAll}
-              type="button"
-            />
+            <Button label="Clear" icon="pi pi-times" severity="secondary" outlined onClick={clearAll} type="button" />
             <Button
               label="Route"
               icon="pi pi-directions"
@@ -178,7 +171,9 @@ export function FloatingRouteSearch({
               type="button"
             />
           </div>
-          <p className="cursor-pointer" onClick={onSelectMap}>Select on map</p>
+          <p className="cursor-pointer" onClick={onSelectMap}>
+            Select on map
+          </p>
         </div>
       </Card>
     </div>

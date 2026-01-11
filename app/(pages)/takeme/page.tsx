@@ -16,7 +16,7 @@ const HomePage = () => {
   const getRoutes = useCallback(async () => {
     const { data } = await RouteService.getRoutes();
     setRoutes(data);
-  }, [])
+  }, []);
 
   const getGeoLocaiton = useCallback(async () => {
     const location = await getCurrentLocation();
@@ -25,12 +25,11 @@ const HomePage = () => {
   }, []);
 
   const onRouteSelected = (route: Route | undefined) => {
-    if (route && route.points && route.points.length > 0)
-      setCurrentLocation({ lat: route?.points[0].lat, lng: route?.points[0].lng });
+    if (route && route.points && route.points.length > 0) setCurrentLocation({ lat: route?.points[0].lat, lng: route?.points[0].lng });
 
     console.log(route?.name);
     setSelectedRoute(route);
-  }
+  };
 
   useEffect(() => {
     getGeoLocaiton();
@@ -38,28 +37,28 @@ const HomePage = () => {
 
   useEffect(() => {
     getRoutes();
-  }, [getRoutes])
+  }, [getRoutes]);
 
   return (
-    <div className='grid'>
-      <div className='col-9'>
+    <div className="grid">
+      <div className="col-9">
         <RouteDrawer
           customRoute={selectedRoute}
           initialCenter={currentLocation}
           onSave={async (doc) => {
             const geojson = {
-              type: "LineString",
-              coordinates: doc.points.map(p => [p.lng, p.lat]),
+              type: 'LineString',
+              coordinates: doc.points.map((p) => [p.lng, p.lat])
             };
             await fetch('http://localhost:8923/api/routes', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ name: doc.name, geojson, points: doc.points }),
+              body: JSON.stringify({ name: doc.name, geojson, points: doc.points })
             });
           }}
         />
       </div>
-      <div className='col-3'>
+      <div className="col-3">
         <RouteList routes={routes} selectedRoute={onRouteSelected} />
       </div>
     </div>

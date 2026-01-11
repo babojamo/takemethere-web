@@ -1,20 +1,20 @@
-"use client";
+'use client';
 
-import "leaflet/dist/leaflet.css";
-import "leaflet-draw/dist/leaflet.draw.css";
+import 'leaflet/dist/leaflet.css';
+import 'leaflet-draw/dist/leaflet.draw.css';
 
-import React, { useEffect, useRef, useState } from "react";
-import { MapContainer, Marker, TileLayer, useMap, useMapEvents } from "react-leaflet";
-import L from "leaflet";
-import "leaflet-draw";
-import { LatLng, Route, RouteDoc, RoutePoints } from "@/app/types/route";
+import React, { useEffect, useRef, useState } from 'react';
+import { MapContainer, Marker, TileLayer, useMap, useMapEvents } from 'react-leaflet';
+import L from 'leaflet';
+import 'leaflet-draw';
+import { LatLng, Route, RouteDoc, RoutePoints } from '@/app/types/route';
 
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl: "/leaflet/marker-icon-2x.png",
-  iconUrl: "/leaflet/marker-icon.png",
-  shadowUrl: "/leaflet/marker-shadow.png",
+  iconRetinaUrl: '/leaflet/marker-icon-2x.png',
+  iconUrl: '/leaflet/marker-icon.png',
+  shadowUrl: '/leaflet/marker-shadow.png'
 });
 
 function FlyToLocation({ position }: { position?: { lat: number; lng: number } }) {
@@ -24,7 +24,7 @@ function FlyToLocation({ position }: { position?: { lat: number; lng: number } }
     if (position) {
       map.flyTo([position.lat, position.lng], 15, {
         animate: true,
-        duration: 1.2,
+        duration: 1.2
       });
     }
   }, [position, map]);
@@ -32,11 +32,7 @@ function FlyToLocation({ position }: { position?: { lat: number; lng: number } }
   return null;
 }
 
-function DrawToolbar({
-  featureGroupRef,
-}: {
-  featureGroupRef: React.RefObject<L.FeatureGroup | null>;
-}) {
+function DrawToolbar({ featureGroupRef }: { featureGroupRef: React.RefObject<L.FeatureGroup | null> }) {
   const map = useMap();
 
   useEffect(() => {
@@ -45,15 +41,15 @@ function DrawToolbar({
     map.addLayer(fg);
 
     const drawControl = new L.Control.Draw({
-      position: "topleft",
+      position: 'topleft',
       draw: {
         polygon: false,
         rectangle: false,
         circle: false,
         circlemarker: false,
         marker: false,
-        polyline: true,
-      },
+        polyline: true
+      }
     });
 
     map.addControl(drawControl);
@@ -62,7 +58,6 @@ function DrawToolbar({
       const layer = e.layer as L.Layer;
       fg.clearLayers();
       fg.addLayer(layer);
-
     };
 
     map.on(L.Draw.Event.CREATED, onCreated);
@@ -84,7 +79,7 @@ function ClickToDropPin({
   disabled,
   onSelect,
   clearNow = false,
-  clearPrevious = true,
+  clearPrevious = true
 }: {
   disabled?: boolean;
   clearNow?: boolean;
@@ -96,7 +91,6 @@ function ClickToDropPin({
 
   useMapEvents({
     click(e) {
-
       // Disable set marker
       if (disabled) return;
 
@@ -112,7 +106,7 @@ function ClickToDropPin({
       markerRef.current = marker;
 
       onSelect?.({ lat, lng });
-    },
+    }
   });
 
   useEffect(() => {
@@ -126,14 +120,13 @@ function ClickToDropPin({
 }
 
 export function RouteMapper({
-
   origin,
   destination,
   chooseDirection,
   onChoosedDirection,
 
   initialCenter = { lat: 14.5995, lng: 120.9842 },
-  routes,
+  routes
 }: {
   chooseDirection?: boolean;
   origin?: LatLng;
@@ -153,15 +146,13 @@ export function RouteMapper({
   // Load route from DB into state
   useEffect(() => {
     if (routes) {
-      if (routes && routes.length > 0)
-        setRoutePoints(routes.map((r: Route) => ({ color: r?.points_color ?? '#782fc2', points: r.points ?? [] })));
+      if (routes && routes.length > 0) setRoutePoints(routes.map((r: Route) => ({ color: r?.points_color ?? '#782fc2', points: r.points ?? [] })));
       else {
         const fg = featureGroupRef.current;
         if (!fg) return;
         // remove ALL old polylines
         fg.clearLayers();
       }
-
     }
   }, [routes]);
 
@@ -181,7 +172,7 @@ export function RouteMapper({
       if (points.length > 1) {
         const polyline = L.polyline(
           points.map((p) => [p.lat, p.lng] as [number, number]),
-          { color: route.color ?? "#2563eb", weight: 4 }
+          { color: route.color ?? '#2563eb', weight: 4 }
         );
 
         fg.addLayer(polyline);
@@ -191,7 +182,7 @@ export function RouteMapper({
 
   const onChoosing = (coordinates: LatLng) => {
     setDirection([...direction, coordinates]);
-  }
+  };
 
   useEffect(() => {
     if (direction.length !== 2) {
@@ -212,38 +203,19 @@ export function RouteMapper({
   }, [direction, onChoosedDirection]);
 
   return (
-    <div style={{ height: "100vh", width: "100vw" }}>
-      <MapContainer
-        center={[initialCenter.lat, initialCenter.lng]}
-        zoom={13}
-        style={{ height: "100%", width: "100%" }}
-      >
-        <TileLayer
-          url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
-          attribution="&copy; OpenStreetMap contributors"
-        />
+    <div style={{ height: '100vh', width: '100vw' }}>
+      <MapContainer center={[initialCenter.lat, initialCenter.lng]} zoom={13} style={{ height: '100%', width: '100%' }}>
+        <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" attribution="&copy; OpenStreetMap contributors" />
         {/* Adds draw + edit tools, and keeps state in sync */}
         <DrawToolbar featureGroupRef={featureGroupRef} />
 
-        {
-          chooseDirection &&
-          <ClickToDropPin
-            clearNow={clearChooseDirection}
-            onSelect={onChoosing}
-          />
-        }
+        {chooseDirection && <ClickToDropPin clearNow={clearChooseDirection} onSelect={onChoosing} />}
 
         {/* Drop origin pin */}
-        <ClickToDropPin
-          disabled={true}
-          value={origin}
-        />
+        <ClickToDropPin disabled={true} value={origin} />
 
         {/* Drop destination pin */}
-        <ClickToDropPin
-          disabled={true}
-          value={destination}
-        />
+        <ClickToDropPin disabled={true} value={destination} />
 
         {/* Optional: fly to initial center */}
         <FlyToLocation position={initialCenter} />

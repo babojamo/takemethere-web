@@ -1,20 +1,20 @@
-"use client";
+'use client';
 
-import "leaflet/dist/leaflet.css";
-import "leaflet-draw/dist/leaflet.draw.css";
+import 'leaflet/dist/leaflet.css';
+import 'leaflet-draw/dist/leaflet.draw.css';
 
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { MapContainer, TileLayer, useMap } from "react-leaflet";
-import L from "leaflet";
-import "leaflet-draw";
-import { InputText } from "primereact/inputtext";
-import { LatLng, Route, RouteDoc } from "@/app/types/route";
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { MapContainer, TileLayer, useMap } from 'react-leaflet';
+import L from 'leaflet';
+import 'leaflet-draw';
+import { InputText } from 'primereact/inputtext';
+import { LatLng, Route, RouteDoc } from '@/app/types/route';
 
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl: "/leaflet/marker-icon-2x.png",
-  iconUrl: "/leaflet/marker-icon.png",
-  shadowUrl: "/leaflet/marker-shadow.png",
+  iconRetinaUrl: '/leaflet/marker-icon-2x.png',
+  iconUrl: '/leaflet/marker-icon.png',
+  shadowUrl: '/leaflet/marker-shadow.png'
 });
 
 function toLatLngArray(layer: L.Polyline): LatLng[] {
@@ -24,7 +24,7 @@ function toLatLngArray(layer: L.Polyline): LatLng[] {
 
 function DrawToolbar({
   onRouteChange,
-  featureGroupRef,
+  featureGroupRef
 }: {
   onRouteChange: (pts: LatLng[]) => void;
   featureGroupRef: React.MutableRefObject<L.FeatureGroup | null>;
@@ -37,19 +37,19 @@ function DrawToolbar({
     map.addLayer(fg);
 
     const drawControl = new L.Control.Draw({
-      position: "topleft",
+      position: 'topleft',
       draw: {
         polygon: false,
         rectangle: false,
         circle: false,
         circlemarker: false,
         marker: false,
-        polyline: true,
+        polyline: true
       },
       edit: {
         featureGroup: fg,
-        remove: true,
-      },
+        remove: true
+      }
     });
 
     map.addControl(drawControl);
@@ -102,7 +102,7 @@ function FlyToLocation({ position }: { position?: { lat: number; lng: number } }
     if (position) {
       map.flyTo([position.lat, position.lng], 15, {
         animate: true,
-        duration: 1.2,
+        duration: 1.2
       });
     }
   }, [position, map]);
@@ -113,7 +113,7 @@ function FlyToLocation({ position }: { position?: { lat: number; lng: number } }
 export function RouteDrawer({
   initialCenter = { lat: 14.5995, lng: 120.9842 },
   customRoute,
-  onSave,
+  onSave
 }: {
   initialCenter?: LatLng;
   onSave: (doc: RouteDoc) => Promise<void> | void;
@@ -121,7 +121,7 @@ export function RouteDrawer({
 }) {
   const [routePoints, setRoutePoints] = useState<LatLng[]>([]);
   const [saving, setSaving] = useState(false);
-  const [routeName, setRouteName] = useState("Route 1");
+  const [routeName, setRouteName] = useState('Route 1');
 
   // Holds the editable layers for Leaflet Draw
   const featureGroupRef = useRef<L.FeatureGroup | null>(null);
@@ -129,11 +129,11 @@ export function RouteDrawer({
   const editableLayerRef = useRef<L.Polyline | null>(null);
 
   const handleSave = useCallback(async () => {
-    if (routePoints.length < 2) return alert("Draw a route first.");
+    if (routePoints.length < 2) return alert('Draw a route first.');
     setSaving(true);
     try {
       await onSave({ points: routePoints, name: routeName });
-      alert("Saved!");
+      alert('Saved!');
     } finally {
       setSaving(false);
     }
@@ -143,8 +143,7 @@ export function RouteDrawer({
   useEffect(() => {
     if (customRoute) {
       setRouteName(customRoute.name);
-      if (customRoute.points && customRoute.points.length > 0)
-        setRoutePoints(customRoute.points);
+      if (customRoute.points && customRoute.points.length > 0) setRoutePoints(customRoute.points);
     }
   }, [customRoute]);
 
@@ -163,7 +162,7 @@ export function RouteDrawer({
     if (routePoints.length > 1) {
       const polyline = L.polyline(
         routePoints.map((p) => [p.lat, p.lng] as [number, number]),
-        { color: "#2563eb", weight: 4 }
+        { color: '#2563eb', weight: 4 }
       );
 
       fg.addLayer(polyline);
@@ -173,34 +172,21 @@ export function RouteDrawer({
 
   return (
     <div style={{ height: 650 }}>
-      <div style={{ padding: 12, display: "flex", gap: 8, alignItems: "center" }}>
+      <div style={{ padding: 12, display: 'flex', gap: 8, alignItems: 'center' }}>
         <button onClick={handleSave} disabled={saving || routePoints.length < 2}>
-          {saving ? "Saving..." : "Save Route"}
+          {saving ? 'Saving...' : 'Save Route'}
         </button>
 
-        <InputText
-          placeholder="Route Name"
-          value={routeName}
-          onChange={(e) => setRouteName(e.target.value)}
-        />
+        <InputText placeholder="Route Name" value={routeName} onChange={(e) => setRouteName(e.target.value)} />
 
         <div style={{ fontSize: 12, opacity: 0.75 }}>
           Points: {routePoints.length}
-          {routePoints.length
-            ? ` | Start: ${routePoints[0].lat.toFixed(5)}, ${routePoints[0].lng.toFixed(5)}`
-            : ""}
+          {routePoints.length ? ` | Start: ${routePoints[0].lat.toFixed(5)}, ${routePoints[0].lng.toFixed(5)}` : ''}
         </div>
       </div>
 
-      <MapContainer
-        center={[initialCenter.lat, initialCenter.lng]}
-        zoom={13}
-        style={{ height: "calc(100% - 48px)", width: "100%" }}
-      >
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution="&copy; OpenStreetMap contributors"
-        />
+      <MapContainer center={[initialCenter.lat, initialCenter.lng]} zoom={13} style={{ height: 'calc(100% - 48px)', width: '100%' }}>
+        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution="&copy; OpenStreetMap contributors" />
 
         {/* Adds draw + edit tools, and keeps state in sync */}
         <DrawToolbar onRouteChange={setRoutePoints} featureGroupRef={featureGroupRef} />
@@ -209,9 +195,7 @@ export function RouteDrawer({
         <FlyToLocation position={initialCenter} />
       </MapContainer>
 
-      <pre style={{ padding: 12, margin: 0, maxHeight: 180, overflow: "auto", background: "#fafafa" }}>
-        {JSON.stringify(routePoints, null, 2)}
-      </pre>
+      <pre style={{ padding: 12, margin: 0, maxHeight: 180, overflow: 'auto', background: '#fafafa' }}>{JSON.stringify(routePoints, null, 2)}</pre>
     </div>
   );
 }

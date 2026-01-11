@@ -17,5 +17,5 @@ export interface RouteFares {
   route_fare: RouteFare[];
 }
 export type LatLng = { lat: number; lng: number };
-export type RouteDoc = { points: LatLng[], name: string };
+export type RouteDoc = { points: LatLng[]; name: string };
 export type RoutePoints = { color: string; points: LatLng[] };

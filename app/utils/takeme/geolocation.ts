@@ -1,7 +1,7 @@
 export function getCurrentLocation(): Promise<{ lat: number; lng: number }> {
   return new Promise((resolve, reject) => {
     if (!navigator.geolocation) {
-      reject(new Error("Geolocation not supported"));
+      reject(new Error('Geolocation not supported'));
       return;
     }
 
@@ -9,14 +9,14 @@ export function getCurrentLocation(): Promise<{ lat: number; lng: number }> {
       (pos) => {
         resolve({
           lat: pos.coords.latitude,
-          lng: pos.coords.longitude,
+          lng: pos.coords.longitude
         });
       },
       (err) => reject(err),
       {
         enableHighAccuracy: true,
         timeout: 10000,
-        maximumAge: 0,
+        maximumAge: 0
       }
     );
   });

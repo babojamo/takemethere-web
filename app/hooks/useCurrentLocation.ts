@@ -16,6 +16,6 @@ export default function useCurrentLocation() {
   }, [getGeoLocaiton]);
 
   return {
-    currentLocation,
+    currentLocation
   };
 }
