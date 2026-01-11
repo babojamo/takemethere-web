@@ -7,8 +7,8 @@ interface DefaultLayoutProps {
 }
 
 export const metadata: Metadata = {
-  title: 'Sun Pleats',
-  description: 'The ultimate collection of design-agnostic, flexible and accessible React UI Components.'
+  title: 'Takemethere',
+  description: 'TakeMeThere guides your journey planning web app that provides route options, vehicle recommendations, and fare estimates to help users find the most efficient and affordable travel routes.'
 };
 
 export default function DefaultLayout({ children }: DefaultLayoutProps) {

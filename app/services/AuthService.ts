@@ -16,7 +16,7 @@ class AuthService {
   async login(payload?: Record<string, any>): Promise<any> {
     await apiClient.get('/sanctum/csrf-cookie');
     const response = await apiClient.post(API_ROUTE_LOGIN, {
-      device_name: 'sunpleats-web',
+      device_name: 'takemethere',
       ...payload
     });
     return response.data;
