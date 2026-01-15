@@ -1,3 +1,20 @@
 /* General */
 $borderRadius:12px;             /* border radius of layout element e.g. card, sidebar */ 
 $transitionDuration:.2s;        /* transition duration of layout elements e.g. sidebar, overlay menus */ 
+
+$blue: #2BCBBA;
+
+$black:    #000000; // true black
+$black-1:  #0d0d0d; // near-black (backgrounds)
+$black-2:  #141414;
+$black-3:  #1a1a1a;
+$black-4:  #262626;
+$black-5:  #333333; // default dark surface
+$black-6:  #404040;
+$black-7:  #595959;
+$black-8:  #737373; // secondary text
+$black-9:  #8c8c8c; // disabled text
+$black-10: #bfbfbf; // borders / dividers
+
+
+$white: #ffffff;

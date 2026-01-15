@@ -1,7 +1,8 @@
 import React, { useMemo, useState } from 'react';
 import { Card } from 'primereact/card';
-import { Route, RouteFares } from '@/app/types/route';
+import { RouteFares } from '@/app/types/route';
 import { Accordion, AccordionTab, AccordionTabChangeEvent } from 'primereact/accordion';
+import './component.scss';
 
 type Props = {
   route_fares: RouteFares[];
@@ -31,28 +32,42 @@ export function FloatingRouteList({ route_fares, onRouteClick, top = 16, right =
   };
 
   return (
-    <div style={containerStyle}>
-      <Card className="shadow-3" style={{ borderRadius: 12 }}>
+    <div className="suggested-routes" style={containerStyle}>
+      <Card className="suggestion-box" style={{ borderRadius: 12 }}>
         <Accordion activeIndex={activeIndex} onTabChange={onTabChange}>
           {route_fares.map((r, i) => (
-            <AccordionTab key={`route-${i}`} header={`Route ${i + 1}`}>
+            <AccordionTab
+              key={`route-${i}`}
+              headerTemplate={
+                <div className="flex align-items-center gap-2">
+                  <span className="pi pi-directions"></span>
+                  <span>{`Route ${i + 1}`}</span>
+                </div>
+              }
+            >
               <p>
-                <strong>Total:</strong> {r.total_fare}
+                <strong>Estimate Total Fare:</strong> ₱{r.total_fare}
               </p>
               <p>
-                <strong>Breakdown:</strong>
+                <strong>Route Breakdown</strong>
               </p>
-              <ul>
-                {r.route_fare.map((rf, j) => (
-                  <li key={`r${j}`}>
-                    <span style={{ color: rf.route.points_color ?? 'black' }}> {rf.route.name}</span>: {rf.estimate_fare}
-                  </li>
-                ))}
-              </ul>
+              {r.route_fare.map((rf, j) => (
+                <div className="route-leg" key={`r${j}`}>
+                  <div className="route-dot" style={{ backgroundColor: rf.route.points_color ?? 'black' }}>
+                    &nbsp;
+                  </div>
+                  <div className="route-name"> {rf.route.name}</div>
+                  <span className="fare-pill">₱{rf.estimate_fare}</span>
+                </div>
+              ))}
             </AccordionTab>
           ))}
         </Accordion>
       </Card>
+      <small>
+        Disclaimer: The fare information provided is for estimation purposes only and does not represent final or guaranteed pricing. Actual fares may
+        vary due to traffic conditions, route adjustments, availability of transport, and local fare regulations.
+      </small>
     </div>
   );
 }

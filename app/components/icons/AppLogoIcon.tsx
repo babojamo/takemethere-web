@@ -1,0 +1,51 @@
+import React from 'react';
+
+type AppLogoIconProps = {
+  size?: number;
+  className?: string;
+};
+
+const AppLogoIcon: React.FC<AppLogoIconProps> = ({ size = 32, className }) => {
+  return (
+    <svg width={size} height={size} viewBox="138 108 236 374" xmlns="http://www.w3.org/2000/svg" className={className}>
+      <defs>
+        {/* Green gradient for head */}
+        <linearGradient id="headGradient" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#2BCBBA" />
+          <stop offset="100%" stopColor="#2ECC71" />
+        </linearGradient>
+
+        {/* Teal gradient for pin */}
+        <linearGradient id="pinGradient" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#8FE3CF" />
+          <stop offset="100%" stopColor="#1FA2A6" />
+        </linearGradient>
+      </defs>
+
+      {/* Pin body */}
+      <path
+        d="M256 470
+           C200 380 140 310 140 240
+           C140 160 190 110 256 110
+           C322 110 372 160 372 240
+           C372 310 312 380 256 470Z"
+        fill="url(#pinGradient)"
+      />
+
+      {/* Head */}
+      <circle cx="256" cy="210" r="100" fill="url(#headGradient)" />
+
+      {/* Eyes */}
+      <circle cx="220" cy="195" r="22" fill="#E6FBFF" />
+      <circle cx="292" cy="195" r="22" fill="#E6FBFF" />
+
+      <circle cx="225" cy="200" r="12" fill="#4DD0E1" />
+      <circle cx="297" cy="200" r="12" fill="#4DD0E1" />
+
+      {/* Smile */}
+      <path d="M200 235 Q256 270 312 235" fill="none" stroke="#E6FBFF" strokeWidth="12" strokeLinecap="round" />
+    </svg>
+  );
+};
+
+export default AppLogoIcon;

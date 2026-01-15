@@ -2,6 +2,9 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { AutoComplete, AutoCompleteCompleteEvent } from 'primereact/autocomplete';
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
+import AppLogoIcon from '@/app/components/icons/AppLogoIcon';
+
+import './component.scss';
 
 export type LocationOption = {
   label: string; // display name
@@ -35,6 +38,8 @@ export function FloatingRouteSearch({
 }: Props) {
   const [originQuery, setOriginQuery] = useState('');
   const [destQuery, setDestQuery] = useState('');
+
+  const [isSearchBoxVisible, setIsSearchBoxVisible] = useState<boolean>(false);
 
   const [origin, setOrigin] = useState<LocationOption | undefined>(undefined);
   const [destination, setDestination] = useState<LocationOption | undefined>(undefined);
@@ -109,73 +114,97 @@ export function FloatingRouteSearch({
   const canSearch = Boolean(origin?.lat && destination?.lat);
 
   return (
-    <div style={containerStyle}>
-      <Card className="shadow-3" style={{ borderRadius: 12 }}>
-        <div className="flex flex-column gap-2">
-          <div className="flex flex-column gap-1">
-            <label style={{ fontSize: 12, opacity: 0.8 }}>Origin</label>
-            <AutoComplete
-              value={origin ?? originQuery}
-              suggestions={originSuggestions}
-              completeMethod={completeOrigin}
-              field="label"
-              dropdown={false}
-              forceSelection
-              placeholder="Search origin location..."
-              onChange={(e) => {
-                // typing
-                if (typeof e.value === 'string') setOriginQuery(e.value);
-              }}
-              onSelect={(e) => {
-                const selected = e.value as LocationOption;
-                setOrigin(selected);
-                setOriginQuery(selected.label);
-                emitChange(selected, destination);
-              }}
-              className="w-full"
-              inputClassName="w-full"
-            />
+    <div className="search-bar" style={containerStyle}>
+      <div className="flex align-items-center gap-2">
+        <div className="flex align-items-center app-icon">
+          <AppLogoIcon size={54} className="drop-shadow-lg" />
+          <div className="app-name">
+            <h6>GORA</h6>
+            <span className="app-tag-line">Commute Smarter</span>
           </div>
-
-          <div className="flex flex-column gap-1">
-            <label style={{ fontSize: 12, opacity: 0.8 }}>Destination</label>
-            <AutoComplete
-              value={destination ?? destQuery}
-              suggestions={destSuggestions}
-              completeMethod={completeDestination}
-              field="label"
-              dropdown={false}
-              forceSelection
-              placeholder="Search destination location..."
-              onChange={(e) => {
-                if (typeof e.value === 'string') setDestQuery(e.value);
-              }}
-              onSelect={(e) => {
-                const selected = e.value as LocationOption;
-                setDestination(selected);
-                setDestQuery(selected.label);
-                emitChange(origin, selected);
-              }}
-              className="w-full"
-              inputClassName="w-full"
-            />
-          </div>
-
-          <div className="flex gap-2 justify-content-end pt-1">
-            <Button label="Clear" icon="pi pi-times" severity="secondary" outlined onClick={clearAll} type="button" />
-            <Button
-              label="Route"
-              icon="pi pi-directions"
-              disabled={!canSearch}
-              onClick={() => onSearchRoute?.({ origin, destination })}
-              type="button"
-            />
-          </div>
-          <p className="cursor-pointer" onClick={onSelectMap}>
-            Select on map
-          </p>
         </div>
-      </Card>
+        <Button
+          className="btn-blue"
+          icon="pi pi-search"
+          rounded
+          outlined
+          severity="info"
+          aria-label="User"
+          onClick={() => setIsSearchBoxVisible(!isSearchBoxVisible)}
+        />
+      </div>
+
+      {isSearchBoxVisible && (
+        <Card className="search-box" style={{ borderRadius: 12 }}>
+          <div className="flex flex-column gap-2">
+            <div className="flex flex-column gap-1">
+              <label className="origin-label">I am here</label>
+              <AutoComplete
+                value={origin ?? originQuery}
+                suggestions={originSuggestions}
+                completeMethod={completeOrigin}
+                field="label"
+                dropdown={false}
+                forceSelection
+                placeholder="Search origin location..."
+                onChange={(e) => {
+                  // typing
+                  if (typeof e.value === 'string') setOriginQuery(e.value);
+                }}
+                onSelect={(e) => {
+                  const selected = e.value as LocationOption;
+                  setOrigin(selected);
+                  setOriginQuery(selected.label);
+                  emitChange(selected, destination);
+                }}
+                className="w-full"
+                inputClassName="w-full"
+              />
+            </div>
+
+            <div className="flex flex-column gap-1">
+              <label className="destination-label">Take me there</label>
+              <AutoComplete
+                value={destination ?? destQuery}
+                suggestions={destSuggestions}
+                completeMethod={completeDestination}
+                field="label"
+                dropdown={false}
+                forceSelection
+                placeholder="Search destination location..."
+                onChange={(e) => {
+                  if (typeof e.value === 'string') setDestQuery(e.value);
+                }}
+                onSelect={(e) => {
+                  const selected = e.value as LocationOption;
+                  setDestination(selected);
+                  setDestQuery(selected.label);
+                  emitChange(origin, selected);
+                }}
+                className="w-full"
+                inputClassName="w-full"
+              />
+            </div>
+
+            <div className="flex gap-2 justify-content-end pt-1">
+              <Button label="Clear" size="small" rounded icon="pi pi-times" severity="warning" outlined onClick={clearAll} type="button" />
+              <Button
+                label="Route"
+                size="small"
+                icon="pi pi-directions"
+                disabled={!canSearch}
+                onClick={() => onSearchRoute?.({ origin, destination })}
+                type="button"
+                className="btn-blue"
+                rounded
+              />
+            </div>
+            <p className="cursor-pointer" onClick={onSelectMap}>
+              Select on map
+            </p>
+          </div>
+        </Card>
+      )}
     </div>
   );
 }

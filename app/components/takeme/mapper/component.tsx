@@ -7,7 +7,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { MapContainer, Marker, TileLayer, useMap, useMapEvents } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet-draw';
-import { LatLng, Route, RouteDoc, RoutePoints } from '@/app/types/route';
+import { LatLng, Route, RoutePoints } from '@/app/types/route';
 
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 
@@ -188,7 +188,12 @@ export function RouteMapper({
 
   return (
     <div style={{ height: '100vh', width: '100vw' }}>
-      <MapContainer center={[initialCenter.lat, initialCenter.lng]} zoom={13} zoomControl={false} style={{ height: '100%', width: '100%' }}>
+      <MapContainer
+        center={[initialCenter.lat, initialCenter.lng]}
+        zoom={13}
+        zoomControl={false}
+        style={{ height: '100%', width: '100%', cursor: `${chooseDirection ? 'pointer' : 'grab'}` }}
+      >
         <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" attribution="&copy; OpenStreetMap contributors" />
         {/* Adds draw + edit tools, and keeps state in sync */}
         <DrawToolbar featureGroupRef={featureGroupRef} />

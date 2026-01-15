@@ -1,0 +1,60 @@
+@use '../../../../../styles/layout/_variables.scss' as vars;
+
+.search-bar {
+  .app-name {
+    h6 {
+      color: vars.$blue;
+      font-size: 1.2rem;
+      margin: 0;
+    }
+
+    .app-tag-line {
+      font-size: 13px;
+      color: vars.$black-7;
+    }
+  }
+
+  .app-icon {
+    cursor: pointer;
+    border-radius: 12px;
+    padding: 5px;
+
+    box-shadow:
+      0 4px 6px rgba(0, 0, 0, 0.08),
+      0 10px 20px rgba(0, 0, 0, 0.06);
+
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+
+    &:hover {
+      box-shadow:
+        0 6px 10px rgba(0, 0, 0, 0.1),
+        0 14px 28px rgba(0, 0, 0, 0.08);
+      transform: translateY(-2px);
+    }
+  }
+
+  .search-box {
+    margin: 1rem;
+    background-color: rgba(0, 0, 0, 0.08);
+    box-shadow:
+      0 4px 6px rgba(0, 0, 0, 0.08),
+      0 10px 20px rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.486);
+      transform: translateY(-2px);
+
+      * {
+        color: vars.$white !important;
+      }
+    }
+
+    .origin-label,
+    .destination-label {
+      font-size: 15px;
+      color: vars.$black-4;
+    }
+
+  }
+}
